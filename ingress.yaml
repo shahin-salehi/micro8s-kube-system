@@ -1,0 +1,24 @@
+# https://microk8s.io/docs/addon-ingress
+# We enabled microk8s ingress addon which I believe sets the nginx default
+# ingress class k8s.io/ingress-nginx in: 
+# https://kubernetes.io/docs/concepts/services-networking/ingress/#default-ingress-class
+# also more docs here: https://github.com/kubernetes/ingress-nginx?tab=readme-ov-file
+# and here: https://kubernetes.github.io/ingress-nginx/deploy/
+#
+# Now that we have this in place we can point it to our dashboard
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dashboard-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: kubernetes-dashboard
+            port:
+              number: 443
